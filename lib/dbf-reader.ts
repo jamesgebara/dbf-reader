@@ -106,7 +106,6 @@ export abstract class DbfReader {
     }
     private static julianIntToDate(jd: number): Date {
         var year, month, day, l, n, i, j, k;
-
         l = jd + 68569;
         n = Math.floor(Math.floor(4 * l) / 146097);
         l = l - Math.floor((146097 * n + 3) / 4);
@@ -117,13 +116,11 @@ export abstract class DbfReader {
         l = Math.floor(j / 11);
         j = j + 2 - 12 * l;
         i = 100 * (n - 49) + i + l;
-
         year = i;
         month = j;
         day = k;
-        let date = new Date(year, month, day);
-        date.setMonth(date.getMonth() - 1);
-        return date;
+        
+        return new Date(year, month - 1, day);  // month - 1 for 0-indexed JS months
     }
     private static getTypeName(type: string): string {
         let typeName: string = "string";
