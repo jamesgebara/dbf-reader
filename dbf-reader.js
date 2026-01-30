@@ -121,9 +121,7 @@ class DbfReader {
         year = i;
         month = j;
         day = k;
-        let date = new Date(year, month, day);
-        date.setMonth(date.getMonth() - 1);
-        return date;
+        return new Date(year, month - 1, day);  // month - 1 for 0-indexed JS months
     }
     static getTypeName(type) {
         let typeName = "string";
