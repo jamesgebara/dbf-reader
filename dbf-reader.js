@@ -33,19 +33,21 @@ class DbfReader {
         }
     }
     static getDateValue(value) {
-        try {
-            if (value.length == 8) {
-                let year = value.substr(0, 4);
-                let month = value.substr(4, 2);
-                let date = value.substr(6, 2);
-                return new Date(+year, +month, +date);
+        if (typeof value === 'string' && value.length === 8) {
+            const year = Number(value.slice(0, 4));
+            const month = Number(value.slice(4, 6));
+            const day = Number(value.slice(6, 8));
+
+            if (
+                Number.isFinite(year)
+                && Number.isFinite(month)
+                && Number.isFinite(day)
+            ) {
+                return new Date(year, month - 1, day);
             }
         }
-        catch (error) {
-            console.log(error);
-        }
         return null;
-    }
+    };
     static getFieldValue(valueBuffer, type, decimalCount, fieldlength) {
         let value = valueBuffer.toString('utf8').trim();
         let byteRead = 0;
